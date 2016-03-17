@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install": "bower install && mkdir -p files",
+    "postinstall": "bower install && mkdir -p files",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Miguel Peixe <miguel@cardume.art.br> (http://codigourbano.org/)",
