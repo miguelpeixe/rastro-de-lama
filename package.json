@@ -1,0 +1,18 @@
+{
+  "name": "rastro-de-lama",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install": "bower install && mkdir -p files",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Miguel Peixe <miguel@cardume.art.br> (http://codigourbano.org/)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "firebase": "^2.4.1",
+    "mime": "^1.3.4",
+    "node-telegram-bot": "^0.1.9"
+  }
+}

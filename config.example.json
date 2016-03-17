@@ -1,0 +1,5 @@
+{
+  "fbToken": "<your firebase token here>",
+  "botToken": "<your telegram bot token here>",
+  "groupId": "<group id for the telegram group to be listened"
+}

@@ -1,0 +1,24 @@
+{
+  "name": "rastro-de-lama",
+  "version": "0.0.0",
+  "authors": [
+    "Miguel Peixe <miguel@cardume.art.br>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.5.1",
+    "ui-router": "~0.2.18",
+    "jquery": "~2.2.1",
+    "skeleton": "~2.0.4",
+    "angularfire": "~1.1.4",
+    "underscore": "~1.8.3",
+    "ng-dialog": "~0.5.9"
+  }
+}

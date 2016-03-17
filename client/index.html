@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <title>Rastro de Lama</title>
+  </head>
+  <body ng-app="rastrodelama" ng-controller="Messages">
+
+    <h1>Rastro de Lama</h1>
+
+    <h2>Diário de bordo</h2>
+
+    <message ng-repeat="message in messages | orderBy:'date':true" data="message"></message>
+
+    <script type="text/javascript" src="/assets/firebase/firebase.js"></script>
+    <script type="text/javascript" src="/assets/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/assets/angularfire/dist/angularfire.min.js"></script>
+    <script type="text/javascript">
+      angular.module('rastrodelama', [
+        'firebase'
+      ])
+      .controller('Messages', [
+        '$scope',
+        '$firebaseArray',
+        function($scope, $firebaseArray) {
+          var ref = new Firebase('https://rastrodelama.firebaseio.com/messages');
+          $scope.messages = $firebaseArray(ref);
+        }
+      ])
+      .directive('message', [
+        function() {
+          return {
+            restrict: 'E',
+            scope: {
+              data: '='
+            },
+            template: '<div ng-include="getTemplateUrl()"></div>',
+            replace: true,
+            link: function(scope, element, attrs) {
+
+              scope.getTemplateUrl = function() {
+                var type = '';
+                if(scope.data) {
+                  if(scope.data.photo) {
+                    type = 'image';
+                  } else if(scope.data.voice) {
+                    type = 'audio';
+                  } else if(scope.data.document) {
+                    type = 'file';
+                  } else if(scope.data.location) {
+                    type = 'map';
+                  } else if(scope.data.text) {
+                    type = 'text';
+                  }
+                }
+                if(type) {
+                  return 'messages/' + type + '.html';
+                } else {
+                  return null
+                }
+              }
+
+            }
+          }
+        }
+      ])
+      .directive('messageImage', [
+        function() {
+          return {
+            restrict: 'E',
+            scope: {
+              data: '='
+            },
+            template: '<img ng-src="{{src}}" />',
+            replace: true,
+            link: function(scope, element, attrs) {
+
+              scope.$watch('data', function(data) {
+
+                scope.src = '/file/' + data[data.length-1].file_id;
+
+              });
+
+            }
+          }
+        }
+      ])
+      .directive('messageAudio', [
+        '$sce',
+        function($sce) {
+          return {
+            restrict: 'E',
+            scope: {
+              data: '='
+            },
+            template: '<audio controls><source ng-src="{{src}}" type="audio/ogg" /></audio>',
+            replace: true,
+            link: function(scope, element, attrs) {
+              scope.src = $sce.trustAsResourceUrl('/file/' + scope.data.voice.file_id);
+            }
+          }
+        }
+      ]);
+    </script>
+  </body>
+</html>
