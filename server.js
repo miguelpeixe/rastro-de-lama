@@ -12,7 +12,7 @@ module.exports = function(bot) {
 
   app.use('/assets', express.static(__dirname + '/bower_components'));
 
-  app.use('/styles', expressLess(__dirname + '/less'));
+  app.use('/styles', expressLess(__dirname + '/less', {compress: true}));
 
   var fileDir = 'files';
 
