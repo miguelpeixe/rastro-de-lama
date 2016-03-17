@@ -62,12 +62,14 @@
                     scope.data.type = 'file';
                   } else if(scope.data.location) {
                     scope.data.type = 'map';
+                  } else if(scope.data.video) {
+                    scope.data.type = 'video';
                   } else if(scope.data.text) {
                     scope.data.type = 'text';
                   }
                 }
                 if(scope.data.type) {
-                  return 'messages/' + scope.data.type + '.html';
+                  return '/messages/' + scope.data.type + '.html';
                 } else {
                   return null
                 }
@@ -116,6 +118,28 @@
                 id = scope.data.audio.file_id;
               }
               scope.src = $sce.trustAsResourceUrl('/file/' + id);
+            }
+          }
+        }
+      ])
+      .directive('messageVideo', [
+        '$sce',
+        function($sce) {
+          return {
+            restrict: 'E',
+            scope: {
+              data: '='
+            },
+            template: '<video controls><source ng-src="{{src}}" type="video/mp4" /></video>',
+            replace: true,
+            link: function(scope, element, attrs) {
+              var id = '';
+              console.log(scope.data.video);
+              if(scope.data.video) {
+                id = scope.data.video.file_id;
+              }
+              if(id)
+                scope.src = $sce.trustAsResourceUrl('/file/' + id);
             }
           }
         }
