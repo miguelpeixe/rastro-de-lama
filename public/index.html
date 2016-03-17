@@ -3,14 +3,28 @@
   <head>
     <meta charset="utf-8" />
     <title>Rastro de Lama</title>
+    <link rel="stylesheet" href="/assets/skeleton/css/normalize.css" />
+    <link rel="stylesheet" href="/assets/skeleton/css/skeleton.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
   </head>
   <body ng-app="rastrodelama" ng-controller="Messages">
 
-    <h1>Rastro de Lama</h1>
+    <header id="masthead">
+      <div class="container">
+        <div class="twelve columns">
+          <h1>Rastro de Lama</h1>
+        </div>
+      </div>
+    </header>
 
-    <h2>Diário de bordo</h2>
-
-    <message ng-repeat="message in messages | orderBy:'date':true" data="message"></message>
+    <section id="messages">
+      <div class="container">
+        <div class="twelve columns">
+          <h2>Diário de bordo</h2>
+          <message ng-repeat="message in messages | orderBy:'date':true" data="message"></message>
+        </div>
+      </div>
+    </section>
 
     <script type="text/javascript" src="/assets/firebase/firebase.js"></script>
     <script type="text/javascript" src="/assets/angular/angular.min.js"></script>
@@ -34,27 +48,26 @@
             scope: {
               data: '='
             },
-            template: '<div ng-include="getTemplateUrl()"></div>',
+            templateUrl: '/message.html',
             replace: true,
             link: function(scope, element, attrs) {
 
               scope.getTemplateUrl = function() {
-                var type = '';
                 if(scope.data) {
                   if(scope.data.photo) {
-                    type = 'image';
-                  } else if(scope.data.voice) {
-                    type = 'audio';
+                    scope.data.type = 'image';
+                  } else if(scope.data.voice || scope.data.audio) {
+                    scope.data.type = 'audio';
                   } else if(scope.data.document) {
-                    type = 'file';
+                    scope.data.type = 'file';
                   } else if(scope.data.location) {
-                    type = 'map';
+                    scope.data.type = 'map';
                   } else if(scope.data.text) {
-                    type = 'text';
+                    scope.data.type = 'text';
                   }
                 }
-                if(type) {
-                  return 'messages/' + type + '.html';
+                if(scope.data.type) {
+                  return 'messages/' + scope.data.type + '.html';
                 } else {
                   return null
                 }
@@ -93,10 +106,16 @@
             scope: {
               data: '='
             },
-            template: '<audio controls><source ng-src="{{src}}" type="audio/ogg" /></audio>',
+            template: '<audio controls><source ng-src="{{src}}" /></audio>',
             replace: true,
             link: function(scope, element, attrs) {
-              scope.src = $sce.trustAsResourceUrl('/file/' + scope.data.voice.file_id);
+              var id = '';
+              if(scope.data.voice) {
+                id = scope.data.voice.file_id;
+              } else if(scope.data.audio) {
+                id = scope.data.audio.file_id;
+              }
+              scope.src = $sce.trustAsResourceUrl('/file/' + id);
             }
           }
         }

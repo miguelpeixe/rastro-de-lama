@@ -1,0 +1,7 @@
+<article class="message {{data.type}}">
+  <div ng-include="getTemplateUrl()"></div>
+  <footer class="meta">
+    <p>Autor: {{data.from.first_name}} {{data.from.last_name}}</p>
+    <p>Data: {{data.date}}</p>
+  </footer>
+</article>

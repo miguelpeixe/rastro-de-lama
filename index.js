@@ -1,2 +1,2 @@
-var bot = require('./bot');
+var bot = require('./bot')();
 var app = require('./server')(bot);

@@ -1,4 +1,5 @@
 var express = require('express');
+var expressLess = require('express-less');
 var fs = require('fs');
 var mime = require('mime');
 var config = require('./config');
@@ -7,9 +8,11 @@ module.exports = function(bot) {
 
   var app = express();
 
-  app.use('/', express.static(__dirname + '/client'));
+  app.use('/', express.static(__dirname + '/public'));
 
   app.use('/assets', express.static(__dirname + '/bower_components'));
+
+  app.use('/styles', expressLess(__dirname + '/less'));
 
   var fileDir = 'files';
 
@@ -48,7 +51,7 @@ module.exports = function(bot) {
   });
 
   app.get('/*', function(req, res) {
-  	res.sendFile(__dirname + '/client/index.html');
+  	res.sendFile(__dirname + '/public/index.html');
   });
 
   app.listen(process.env.PORT || 3000, function() {
