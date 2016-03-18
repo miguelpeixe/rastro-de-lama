@@ -21,23 +21,16 @@ module.exports = function(config, dbRef, bot) {
   var fileDir = 'files';
 
   function sendFile(res, path, ext) {
-
     magic.detectFile(path, function(err, result) {
-
       var type = '';
-
       if(!err)
         type = result;
       else
         type = mime.lookup(ext || path);
-
       var charset = mime.charsets.lookup(type);
-
       res.contentType(type + (charset ? '; charset=' + charset : ''));
-      fs.createReadStream(path).pipe(res);
-
     });
-
+    fs.createReadStream(path).pipe(res);
   }
 
   app.get('/file/:fileId', function(req, res) {
