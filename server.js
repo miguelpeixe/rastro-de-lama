@@ -32,16 +32,9 @@ module.exports = function(config, dbRef, bot) {
         type = mime.lookup(ext || path);
 
       var charset = mime.charsets.lookup(type);
-      var options = {
-        dotfiles: 'deny',
-        headers: {
-          'x-timestamp': Date.now(),
-          'x-sent': true
-        }
-      };
 
       res.contentType(type + (charset ? '; charset=' + charset : ''));
-      res.sendFile(path, options);
+      fs.createReadStream(path).pipe(res);
 
     });
 

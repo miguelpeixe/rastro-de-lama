@@ -111,13 +111,16 @@
             template: '<audio controls><source ng-src="{{src}}" /></audio>',
             replace: true,
             link: function(scope, element, attrs) {
-              var id = '';
-              if(scope.data.voice) {
-                id = scope.data.voice.file_id;
-              } else if(scope.data.audio) {
-                id = scope.data.audio.file_id;
-              }
-              scope.src = $sce.trustAsResourceUrl('/file/' + id);
+              scope.$watch('data', function() {
+                var id = '';
+                if(scope.data.voice) {
+                  id = scope.data.voice.file_id;
+                } else if(scope.data.audio) {
+                  id = scope.data.audio.file_id;
+                }
+                if(id)
+                  scope.src = $sce.trustAsResourceUrl('/file/' + id);
+              });
             }
           }
         }
@@ -130,16 +133,17 @@
             scope: {
               data: '='
             },
-            template: '<video controls><source ng-src="{{src}}" type="video/mp4" /></video>',
+            template: '<video controls><source ng-src="{{src}}" /></video>',
             replace: true,
             link: function(scope, element, attrs) {
-              var id = '';
-              console.log(scope.data.video);
-              if(scope.data.video) {
-                id = scope.data.video.file_id;
-              }
-              if(id)
-                scope.src = $sce.trustAsResourceUrl('/file/' + id);
+              scope.$watch('data', function() {
+                var id = '';
+                if(scope.data.video) {
+                  id = scope.data.video.file_id;
+                }
+                if(id)
+                  scope.src = $sce.trustAsResourceUrl('/file/' + id);
+              });
             }
           }
         }
