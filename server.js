@@ -43,6 +43,8 @@ module.exports = function(config, fileRef, bot) {
     });
   }
 
+  var loading = {};
+
   function storeFile(id, url, filepath, ref, callback) {
 
     var deferred = Q.defer();
@@ -71,6 +73,7 @@ module.exports = function(config, fileRef, bot) {
             };
             ref.set(file);
             deferred.resolve(file);
+            delete loading[id];
           });
         });
     /*
@@ -92,13 +95,18 @@ module.exports = function(config, fileRef, bot) {
           }
           ref.set(file);
           deferred.resolve(file);
+          delete loading[id];
         }
       });
     } else {
       deferred.reject({err: 'File storage configuration is missing or broken.'});
     }
 
-    return deferred.promise.nodeify(callback);
+    var promise = deferred.promise.nodeify(callback);
+
+    loading[id] = promise;
+
+    return promise;
 
   }
 
@@ -137,8 +145,15 @@ module.exports = function(config, fileRef, bot) {
     var ref = fileRef.child(id);
 
     ref.once('value', function(snapshot) {
-      if(snapshot.exists()) {
+      // Catch storing file
+      if(loading[id]) {
+        loading[id].then(function(file) {
+          res.redirect(301, file.url);
+        });
+      // File already stored
+      } else if(snapshot.exists()) {
         res.redirect(301, snapshot.val().url);
+      // File not stored, store file and return url
       } else {
         bot.getFile({
           file_id: id
