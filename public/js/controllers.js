@@ -1,6 +1,6 @@
 angular.module('rastrodelama')
 
-.controller('Messages', [
+.controller('MessagesCtrl', [
   '$scope',
   'fbDatabase',
   '$firebaseArray',

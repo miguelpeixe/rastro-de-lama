@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/assets/skeleton/css/skeleton.css" />
     <link rel="stylesheet" href="/styles/main.css" />
   </head>
-  <body ng-app="rastrodelama" ng-controller="Messages">
+  <body ng-app="rastrodelama" ng-controller="MessagesCtrl">
 
     <header id="masthead">
       <div class="container">
@@ -21,12 +21,17 @@
       <div class="container">
         <div class="twelve columns">
           <h2>Diário de bordo</h2>
-          <message ng-repeat="message in messages | orderBy:'date':true" data="message"></message>
         </div>
       </div>
+      <timeline items="messages" date-param="'date'"></timeline>
+      <!-- <message class="timeline-item" data-date="message.date" ng-repeat="message in messages | orderBy:'date':true" data="message"></message> -->
     </section>
 
     <!-- ASSETS -->
+    <script type="text/javascript" src="/assets/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="/assets/moment/min/locales.min.js"></script>
+    <script type="text/javascript" src="/assets/underscore/underscore-min.js"></script>
     <script type="text/javascript" src="/assets/firebase/firebase.js"></script>
     <script type="text/javascript" src="/assets/angular/angular.min.js"></script>
     <script type="text/javascript" src="/assets/angularfire/dist/angularfire.min.js"></script>
@@ -39,8 +44,8 @@
         fbDatabase = "<%= fbDatabase %>";
       })();
     </script>
-
     <script type="text/javascript" src="/js/app.js"></script>
+    <script type="text/javascript" src="/js/filters.js"></script>
     <script type="text/javascript" src="/js/controllers.js"></script>
     <script type="text/javascript" src="/js/directives.js"></script>
     <!-- -->
