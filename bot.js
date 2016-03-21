@@ -1,6 +1,6 @@
 var Bot = require('node-telegram-bot');
 
-module.exports = function(config, dbRef) {
+module.exports = function(config, msgRef) {
 
   var bot = new Bot({
     token: config.botToken
@@ -9,10 +9,10 @@ module.exports = function(config, dbRef) {
   bot.on('message', function(message) {
     if(config.groupId) {
       if(message.chat.id == config.groupId) {
-        dbRef.push(message);
+        msgRef.child(message.message_id).set(message);
       }
     } else {
-      dbRef.push(message);
+      msgRef.child(message.message_id).set(message);
     }
   });
 

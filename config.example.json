@@ -2,5 +2,11 @@
   "fbDatabase": "<your firebase database ref url>",
   "fbToken": "<your firebase token here>",
   "botToken": "<your telegram bot token here>",
-  "groupId": "<group id for the telegram group to be listened"
+  "groupId": "<group id for the telegram group to be listened>",
+  "fileStore": "<should be 'local' or 'cloudinary'>",
+  "cloudinary": {
+    "cloud_name": "<cloudinary cloud name> (optional)",
+    "api_key": "<cloudinary api key> (optional)",
+    "api_secret": "<cloudinary api secret> (optional)"
+  }
 }
