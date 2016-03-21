@@ -36,9 +36,7 @@ article.message {
   &.image,
   &.video {
     padding: 0 !important;
-    margin-left: 5%;
     border: 0;
-    background: transparent !important;
   }
   video,
   img,
@@ -92,6 +90,12 @@ article.message {
     padding-right: 5%;
     .timeline-item {
       padding-left: 10%;
+      border-left: 0;
+      &.video,
+      &.image {
+        margin-left: 5%;
+        background: transparent !important;
+      }
       &:before {
         right: -10%;
       }
@@ -103,6 +107,12 @@ article.message {
     padding-top: 10%;
     .timeline-item {
       padding-right: 10%;
+      border-right: 0;
+      &.video,
+      &.image {
+        margin-right: 5%;
+        background: transparent !important;
+      }
       &:before {
         left: -10%;
       }
