@@ -1,1 +1,6 @@
-<message-video data="data"></message-video>
+<message-video data="data">
+  <a href="javascript:void(0);" ng-click="mediaPlayer.playPause()">Play/pause</a>
+  <p>{{mediaPlayer.formatTime}}/{{mediaPlayer.formatDuration}}</p>
+  <span ng-show="mediaPlayer.playing">Player status: Playing</span>
+  <span ng-hide="mediaPlayer.playing">Player status: Paused</span>
+</message-video>
