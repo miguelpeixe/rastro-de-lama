@@ -10,19 +10,15 @@
   <body ng-app="rastrodelama" ng-controller="MessagesCtrl">
 
     <header id="masthead">
-      <div class="container">
-        <div class="twelve columns">
-          <h1>Rastro de Lama</h1>
-        </div>
-      </div>
+      <h1>Rastro de Lama</h1>
     </header>
 
     <section id="messages">
-      <div class="container">
+      <!-- <div class="container">
         <div class="twelve columns">
           <h2>Diário de bordo</h2>
         </div>
-      </div>
+      </div> -->
       <timeline items="messages" date-param="'date'"></timeline>
       <!-- <message class="timeline-item" data-date="message.date" ng-repeat="message in messages | orderBy:'date':true" data="message"></message> -->
     </section>
