@@ -34,13 +34,19 @@ img {
 }
 
 article.message {
-  border: 1px solid #eee;
-  padding: 5%;
   margin: 0 0 20px;
+  .message-content {
+    border: 1px solid #eee;
+    padding: 5%;
+    margin: 0 0 10px;
+  }
   &.image,
+  &.audio,
   &.video {
-    padding: 0 !important;
-    border: 0;
+    .message-content {
+      padding: 0 !important;
+      border: 0;
+    }
   }
   video,
   img,
@@ -93,15 +99,20 @@ article.message {
     float: left;
     padding-right: 2.5%;
     .timeline-item {
-      padding-left: 10%;
-      border-left: 0;
+      .message-content {
+        padding-left: 10%;
+        border-left: 0;
+      }
       footer {
         text-align: right;
       }
       &.video,
+      &.audio,
       &.image {
-        margin-left: 5%;
-        background: transparent !important;
+        .message-content {
+          margin-left: 5%;
+          background: transparent !important;
+        }
       }
       &:before {
         right: -5%;
@@ -113,12 +124,16 @@ article.message {
     padding-left: 2.5%;
     padding-top: 10%;
     .timeline-item {
-      padding-right: 10%;
-      border-right: 0;
+      .message-content {
+        padding-right: 10%;
+        border-right: 0;
+      }
       &.video,
+      &.audio,
       &.image {
-        margin-right: 5%;
-        background: transparent !important;
+        .message-content {
+          margin-right: 5%;
+        }
       }
       &:before {
         left: -5%;
@@ -128,7 +143,16 @@ article.message {
   .timeline-item {
     margin-bottom: 10%;
     position: relative;
-    background: #fff;
+    .message-content {
+      background: #fff;
+    }
+    &.video,
+    &.audio,
+    &.image {
+      .message-content {
+        background: transparent !important;
+      }
+    }
     &:before {
       content: '';
       position: absolute;
