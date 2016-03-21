@@ -2,16 +2,10 @@ angular.module('rastrodelama')
 
 .controller('Messages', [
   '$scope',
+  'fbDatabase',
   '$firebaseArray',
-  function($scope, $firebaseArray) {
-    var ref = new Firebase('https://rastrodelama.firebaseio.com/messages');
+  function($scope, fbDatabase, $firebaseArray) {
+    var ref = new Firebase(fbDatabase).child('messages');
     $scope.messages = $firebaseArray(ref);
-  }
-])
-
-.controller('MediaCtrl', [
-  '$scope',
-  function() {
-    
   }
 ]);

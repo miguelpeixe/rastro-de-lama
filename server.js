@@ -18,11 +18,15 @@ module.exports = function(config, fileRef, bot) {
 
   var app = express();
 
+  app.engine('html', require('ejs').renderFile);
+
   app.use('/', express.static(__dirname + '/public'));
 
   app.use('/assets', express.static(__dirname + '/bower_components'));
 
   app.use('/styles', expressLess(__dirname + '/less', {compress: true}));
+
+  app.set('view engine', 'ejs');
 
   var fileDir = 'files';
 
@@ -148,7 +152,7 @@ module.exports = function(config, fileRef, bot) {
   });
 
   app.get('/*', function(req, res) {
-  	res.sendFile(__dirname + '/public/index.html');
+  	res.render(__dirname + '/public/index', {fbDatabase: config.fbDatabase});
   });
 
   app.listen(process.env.PORT || 3000, function() {
