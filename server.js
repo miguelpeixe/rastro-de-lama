@@ -80,6 +80,7 @@ module.exports = function(config, fileRef, bot) {
      * Cloudinary storage
      */
     } else if(config.fileStore == 'cloudinary' && config.cloudinary) {
+      console.log(url);
       cloudinary.uploader.upload(url, {
         "resource_type": "auto"
       }, function(err, res) {
@@ -150,8 +151,7 @@ module.exports = function(config, fileRef, bot) {
         loading[id].then(function(file) {
           res.redirect(301, file.url);
         }, function(err) {
-          console.log(err);
-          res.status(500).send(err);
+          res.status(err.http_code).send(err.message);
         });
       // File already stored
       } else if(snapshot.exists()) {
@@ -164,8 +164,7 @@ module.exports = function(config, fileRef, bot) {
           storeFile(id, file.url, filePath, ref).then(function(file) {
             res.redirect(301, file.url);
           }, function(err) {
-            console.log(err);
-            res.status(500).send(err);
+            res.status(err.http_code).send(err.message);
           });
         });
       }
