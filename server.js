@@ -80,7 +80,6 @@ module.exports = function(config, fileRef, bot) {
      * Cloudinary storage
      */
     } else if(config.fileStore == 'cloudinary' && config.cloudinary) {
-      console.log(url);
       cloudinary.uploader.upload(url, {
         "resource_type": "auto"
       }, function(err, res) {
