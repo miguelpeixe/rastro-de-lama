@@ -95,8 +95,8 @@ module.exports = function(config, fileRef, bot) {
           }
           ref.set(file);
           deferred.resolve(file);
-          delete loading[id];
         }
+        delete loading[id];
       });
     } else {
       deferred.reject({err: 'File storage configuration is missing or broken.'});
@@ -149,6 +149,9 @@ module.exports = function(config, fileRef, bot) {
       if(loading[id]) {
         loading[id].then(function(file) {
           res.redirect(301, file.url);
+        }, function(err) {
+          console.log(err);
+          res.status(500).send(err);
         });
       // File already stored
       } else if(snapshot.exists()) {
@@ -160,6 +163,9 @@ module.exports = function(config, fileRef, bot) {
         }).then(function(file) {
           storeFile(id, file.url, filePath, ref).then(function(file) {
             res.redirect(301, file.url);
+          }, function(err) {
+            console.log(err);
+            res.status(500).send(err);
           });
         });
       }
