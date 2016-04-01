@@ -24,9 +24,7 @@ angular.module('rastrodelama')
 
           var itemTemplate = '<message class="timeline-item" data="item"></message>';
 
-          $scope.$watch('items', function() {
-
-            jQuery($element).empty();
+          function getItemsPerDay(items) {
 
             var items = $filter('orderBy')($scope.items, $scope.dateParam, true);
 
@@ -51,35 +49,65 @@ angular.module('rastrodelama')
                 itemsPerDay[day].push(item);
 
               });
+            }
 
+            return itemsPerDay;
+          }
+
+          function buildDay(day, items) {
+            var dayScope = $scope.$new(true);
+            dayScope.formattedDate = day;
+            var $day = $compile('<section class="timeline-day clearfix">' + dayHeader + '<div class="left-col"></div><div class="right-col"></div></section>')(dayScope);
+            items[day].forEach(function(item, i) {
+              buildItem($day, item, i);
+            });
+            return $day;
+          }
+
+          function buildItem($container, item, i) {
+            var child = 'left-col';
+            if($(window).width() >= 900) {
+              if(i%2) child = 'right-col';
+            }
+            var scope = $scope.$new(true);
+            scope.item = item;
+            $container.find('.' + child).append($compile(itemTemplate)(scope));
+          }
+
+          var itemsPerDay;
+
+          $scope.$watch('items', function(items) {
+
+            itemsPerDay = getItemsPerDay(items);
+
+            jQuery($element).empty();
+
+            if(items && items.length) {
               for(var day in itemsPerDay) {
-
-                var dayScope = $scope.$new(true);
-
-                dayScope.formattedDate = day;
-
-                var $day = $compile('<section class="timeline-day clearfix">' + dayHeader + '<div class="left-col"></div><div class="right-col"></div></section>')(dayScope);
-
-                itemsPerDay[day].forEach(function(item, i) {
-
-                  var child = 'left-col';
-                  if(i%2)
-                    child = 'right-col';
-
-                  var scope = $scope.$new(true);
-
-                  scope.item = item;
-
-                  $day.find('.' + child).append($compile(itemTemplate)(scope));
-
-                });
-
-                $element.append($day);
-
+                $element.append(buildDay(day, itemsPerDay));
               }
-
             }
           }, true);
+
+          var prevSize = false;
+          $(window).resize(function() {
+
+            if(!prevSize)
+              prevSize = $(window).width();
+
+            if(
+              ($(window).width() >= 900 && prevSize < 900) ||
+              ($(window).width() < 900 && prevSize >= 900)
+              ) {
+              jQuery($element).empty();
+              for(var day in itemsPerDay) {
+                $element.append(buildDay(day, itemsPerDay));
+              }
+            }
+
+            prevSize = $(window).width();
+
+          });
         }
       ]
     }

@@ -60,6 +60,7 @@ img {
 #masthead {
   text-align: center;
   padding: 20% 0;
+  min-height: 450px;
   background: url(/img/header-bg.jpg) bottom center no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -349,6 +350,31 @@ article.message.audio {
       top: 50%;
       height: 1px;
       background: #eee;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .right-col {
+    display: none;
+  }
+  .left-col {
+    padding-left: 2.5% !important;
+    width: 100% !important;
+    background: #fff;
+    position: relative;
+    z-index: 2;
+    article {
+      &:before {
+        display: none !important;
+      }
+    }
+    .message-content {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    article.message .message-content {
+      border: 1px solid #eee;
     }
   }
 }
