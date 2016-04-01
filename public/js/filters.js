@@ -40,7 +40,7 @@ angular.module('rastrodelama')
 .filter('fromNow', [
   function() {
     return _.memoize(function(input) {
-      return moment(input).utc().fromNow();
+      return moment(input).tz(moment.tz.guess()).fromNow();
     });
   }
 ])
@@ -48,7 +48,7 @@ angular.module('rastrodelama')
 .filter('formatDate', [
   function() {
     return _.memoize(function(input, format) {
-      return moment(input).utc().format(format);
+      return moment(input).tz(moment.tz.guess()).format(format);
     });
   }
 ]);

@@ -8,18 +8,36 @@
     <link rel="stylesheet" href="/assets/skeleton/css/skeleton.css" />
     <link rel="stylesheet" href="/styles/main.css" />
   </head>
-  <body ng-app="rastrodelama" ng-controller="MessagesCtrl">
+  <body ng-app="rastrodelama">
 
     <header id="masthead">
       <h1>Rastro de Lama</h1>
+      <p>Um documentário de Aline Lata e Helena Wolfenson</p>
     </header>
 
-    <section id="messages">
-      <!-- <div class="container">
-        <div class="twelve columns">
-          <h2>Diário de bordo</h2>
+    <section id="description">
+      <div class="container">
+        <div class="eight columns offset-by-two">
+          <p>Não deixe que a história de pessoas que viveram a maior tragédia ambiental do Brasil seja esquecida</p>
+          <p><a class="button">Saiba mais sobre o documentário</a></p>
         </div>
-      </div> -->
+      </div>
+    </section>
+
+    <section id="messages" ng-controller="MessagesCtrl">
+      <div class="container">
+        <div class="six columns">
+          <header id="messages_header">
+            <h2>Diário de bordo</h2>
+            <p>Acompanhe em tempo real as atualizações da equipe de produção e de Marlon e Ricardo, moradores de Bento Rodrigues.</p>
+          </header>
+        </div>
+      </div>
+      <nav id="messages_filters">
+        <a class="active">todas as publicações</a>
+        <a>equipe de produção</a>
+        <a>moradores</a>
+      </nav>
       <timeline items="messages" date-param="'date'"></timeline>
       <!-- <message class="timeline-item" data-date="message.date" ng-repeat="message in messages | orderBy:'date':true" data="message"></message> -->
     </section>
@@ -27,6 +45,8 @@
     <!-- ASSETS -->
     <script type="text/javascript" src="/assets/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/assets/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="/assets/moment/locale/pt-br.js"></script>
+    <script type="text/javascript" src="/assets/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
     <script type="text/javascript" src="/assets/moment/min/locales.min.js"></script>
     <script type="text/javascript" src="/assets/underscore/underscore-min.js"></script>
     <script type="text/javascript" src="/assets/firebase/firebase.js"></script>

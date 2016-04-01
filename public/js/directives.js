@@ -30,7 +30,6 @@ angular.module('rastrodelama')
 
             var items = $filter('orderBy')($scope.items, $scope.dateParam, true);
 
-
             if(items) {
 
               var itemsPerDay = {};
@@ -38,7 +37,13 @@ angular.module('rastrodelama')
               items.forEach(function(item, i) {
 
                 var date = moment(item.date*1000);
-                var day = date.format('DD/MM/YYYY');
+
+                var day;
+                if(date.isSame(moment(), 'day')) {
+                  day = 'Hoje';
+                } else {
+                  day = date.format('DD/MM/YYYY');
+                }
 
                 if(!itemsPerDay[day])
                   itemsPerDay[day] = [];
@@ -92,11 +97,11 @@ angular.module('rastrodelama')
           var str = jQuery(element).text();
           var fontSize = '1em';
           if(str.length < 15) {
-            fontSize = '3em';
+            fontSize = '2.6em';
           } else if(str.length < 50) {
-            fontSize = '2.8em';
-          } else if(str.length < 75) {
             fontSize = '2.4em';
+          } else if(str.length < 75) {
+            fontSize = '2.2em';
           } else if(str.length < 110) {
             fontSize = '2em';
           } else if(str.length < 150) {
@@ -127,6 +132,10 @@ angular.module('rastrodelama')
       templateUrl: '/message.html',
       replace: true,
       link: function(scope, element, attrs) {
+
+        scope.isToday = function(message) {
+          return moment(message.date*1000).isSame(moment(), 'day');
+        }
 
         scope.getTemplateUrl = function() {
           if(scope.data) {
