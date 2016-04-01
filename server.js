@@ -130,6 +130,19 @@ module.exports = function(config, fileRef, bot) {
 
   });
 
+  function getFileUrl(req, file) {
+    var ua = req.headers['user-agent'];
+    if(
+      ua.indexOf('Firefox') != -1 &&
+      file.store == 'cloudinary' &&
+      file.mime.indexOf('video') != -1
+    ) {
+      return cloudinary.url('dv7h71kmagjqagu8cre2.webm', {video_codec: 'vp8', resource_type: 'video'});
+    } else {
+      return file.url;
+    }
+  }
+
   app.get('/file/:fileId', function(req, res) {
 
     var id = req.params.fileId;
@@ -148,13 +161,13 @@ module.exports = function(config, fileRef, bot) {
       // Catch storing file
       if(loading[id]) {
         loading[id].then(function(file) {
-          res.redirect(301, file.url);
+          res.redirect(301, getFileUrl(req, file));
         }, function(err) {
           res.status(err.http_code).send(err.message);
         });
       // File already stored
       } else if(snapshot.exists()) {
-        res.redirect(301, snapshot.val().url);
+        res.redirect(301, getFileUrl(req, snapshot.val()));
       // File not stored, store file and return url
       } else {
         bot.getFile({
