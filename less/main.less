@@ -125,6 +125,8 @@ img {
       padding: 15px 20px;
       line-height: 1;
       background: #fff;
+      border: 1px solid #eee;
+      margin: 0 5px;
       &:hover {
         background: @lighter_link;
         color: #fff;
@@ -145,7 +147,6 @@ article.message {
     margin: 0;
   }
   &.image,
-  &.audio,
   &.video {
     .message-content {
       padding: 0 !important;
@@ -162,7 +163,13 @@ article.message {
     display: block;
   }
   .meta {
-    padding: 5px 0;
+    display: block;
+    margin: 0 auto;
+    width: 60%;
+    text-align: center !important;
+    padding: 15px 0;
+    background: #f6f6f6;
+    font-style: italic;
     text-transform: lowercase;
     .author {
       text-transform: none;
@@ -172,6 +179,80 @@ article.message {
       font-size: .8em;
       color: #666;
     }
+  }
+}
+
+article.message.audio {
+  .message-content {
+    text-align: center;
+    color: #444;
+    .desc {
+      font-size: .8em;
+      font-weight: 600;
+    }
+  }
+}
+
+.video-container {
+  position: relative;
+  video {
+    display: block;
+  }
+  .video-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.5);
+    transition: opacity .2s linear;
+    &.playing {
+      pointer-events: none;
+      opacity: 0;
+    }
+  }
+  &:hover {
+    .video-player {
+      pointer-events: auto !important;
+      opacity: 1 !important;
+    }
+  }
+  .play-pause {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -35px;
+    margin-top: -35px;
+    z-index: 100;
+  }
+  .progress {
+    width: 100%;
+    height: 2px;
+    margin-top: 1px;
+    .progress-bar {
+      background: @link;
+      width: 0;
+      height: 100%;
+      transition: width .5s ease-in-out;
+    }
+  }
+}
+
+.audio-player {
+  text-align: center;
+  .play-pause {
+    display: inline-block;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    padding: 20px;
+  }
+  .time {
+    font-size: .8em;
+    color: #666;
+    margin: 0;
   }
 }
 
@@ -219,7 +300,6 @@ article.message {
         text-align: right;
       }
       &.video,
-      &.audio,
       &.image {
         .message-content {
           margin-left: 5%;

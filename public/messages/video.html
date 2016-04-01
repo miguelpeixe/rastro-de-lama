@@ -1,6 +1,11 @@
 <message-video data="data">
-  <a href="javascript:void(0);" ng-click="mediaPlayer.playPause()">Play/pause</a>
-  <p>{{mediaPlayer.formatTime}}/{{mediaPlayer.formatDuration}}</p>
-  <span ng-show="mediaPlayer.playing">Player status: Playing</span>
-  <span ng-hide="mediaPlayer.playing">Player status: Paused</span>
+  <div class="video-player" ng-class="{playing: mediaPlayer.playing}">
+    <a class="play-pause" href="javascript:void(0);" ng-click="mediaPlayer.playPause()">
+      <span class="fa fa-play fa-5x" ng-hide="mediaPlayer.playing"></span>
+      <span class="fa fa-pause fa-5x" ng-show="mediaPlayer.playing"></span>
+    </a>
+  </div>
+  <div class="progress">
+    <div class="progress-bar" ng-style="{width: mediaPlayer.currentTime*100/mediaPlayer.duration + '%'}"></div>
+  </div>
 </message-video>

@@ -1,6 +1,10 @@
 <message-audio data="data">
-  <a href="javascript:void(0);" ng-click="mediaPlayer.playPause()">Play/pause</a>
-  <p>{{mediaPlayer.formatTime}}/{{mediaPlayer.formatDuration}}</p>
-  <span ng-show="mediaPlayer.playing">Player status: Playing</span>
-  <span ng-hide="mediaPlayer.playing">Player status: Paused</span>
+  <p class="desc">{{data.from.first_name}} enviou uma mensagem de voz</p>
+  <div class="audio-player">
+    <a class="play-pause" href="javascript:void(0);" ng-click="mediaPlayer.playPause()">
+      <span class="fa fa-play fa-4x" ng-hide="mediaPlayer.playing"></span>
+      <span class="fa fa-pause fa-4x" ng-show="mediaPlayer.playing"></span>
+    </a>
+    <p class="time">{{mediaPlayer.formatTime}}/{{mediaPlayer.formatDuration}}</p>
+  </div>
 </message-audio>

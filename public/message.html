@@ -4,8 +4,8 @@
   </div>
   <footer class="meta">
     <p>Enviado
-      <span class="time hour" ng-hide="isToday(data)"> às {{(data.date*1000) | formatDate:'HH:mm'}}</span>
-      <span class="time fromnow" ng-show="isToday(data)"> {{(data.date*1000) | fromNow}}</span>, por <span class="author">{{data.from.first_name}} {{data.from.last_name}}</span>
+      <span class="time hour" ng-hide="isToday(data)"> às {{(data.date*1000) | formatDate:'HH:mm'}},</span>
+      <span class="time fromnow" ng-show="isToday(data)"> {{(data.date*1000) | fromNow}},</span> por <span class="author">{{data.from.first_name}} {{data.from.last_name}}</span>
     </p>
   </footer>
 </article>
