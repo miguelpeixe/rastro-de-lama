@@ -3,10 +3,19 @@ moment.locale('pt-br');
 angular.module('rastrodelama', [
   'ui.router',
   'firebase',
-  'mediaPlayer'
+  'mediaPlayer',
+  'uiGmapgoogle-maps'
 ])
 
 .constant('fbDatabase', fbDatabase)
+
+.config(function(uiGmapGoogleMapApiProvider) {
+  uiGmapGoogleMapApiProvider.configure({
+    key: 'AIzaSyByV053mUkTmAfQStWjRpA0sFmAWE_SP6M',
+    v: '3.20', //defaults to latest 3.X anyhow
+    libraries: 'weather,geometry,visualization'
+  });
+})
 
 .config([
   '$stateProvider',

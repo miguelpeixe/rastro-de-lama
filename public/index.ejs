@@ -12,7 +12,7 @@
   </head>
   <body ng-controller="SiteCtrl">
 
-    <header id="masthead">
+    <header id="masthead" ng-class="{collapsed: !isHome}">
       <nav id="auth_nav">
         <a ui-sref="login" ng-hide="user">Login</a>
         <a href="javascript:void(0);" ng-click="authObj.$unauth()" ng-show="user">Sair</a>
@@ -62,6 +62,7 @@
     <script type="text/javascript" src="/assets/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
     <script type="text/javascript" src="/assets/moment/min/locales.min.js"></script>
     <script type="text/javascript" src="/assets/underscore/underscore-min.js"></script>
+    <script type="text/javascript" src="/assets/lodash/dist/lodash.min.js"></script>
 
     <script type="text/javascript" src="/assets/firebase/firebase.js"></script>
 
@@ -69,6 +70,8 @@
     <script type="text/javascript" src="/assets/ui-router/release/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="/assets/angularfire/dist/angularfire.min.js"></script>
     <script type="text/javascript" src="/assets/angular-media-player/dist/angular-media-player.min.js"></script>
+    <script type="text/javascript" src="/assets/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
+    <script type="text/javascript" src="/assets/angular-google-maps/dist/angular-google-maps.min.js"></script>
     <!-- -->
 
     <!-- APP -->

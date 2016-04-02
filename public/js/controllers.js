@@ -2,9 +2,18 @@ angular.module('rastrodelama')
 
 .controller('SiteCtrl', [
   '$scope',
+  '$state',
   'fbDatabase',
   '$firebaseAuth',
-  function($scope, fbDatabase, $firebaseAuth) {
+  function($scope, $state, fbDatabase, $firebaseAuth) {
+
+    $scope.$on('$stateChangeSuccess', function(ev, toState) {
+      if(toState.name == 'home') {
+        $scope.isHome = true;
+      } else {
+        $scope.isHome = false;
+      }
+    });
 
     var ref = new Firebase(fbDatabase);
 
@@ -38,7 +47,6 @@ angular.module('rastrodelama')
     var publicRef = ref.child('public_messages');
 
     $scope.$watch('user', function(u) {
-      console.log('changed user');
       if(u) {
         $scope.messages = $firebaseArray(messagesRef);
       } else {

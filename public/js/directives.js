@@ -227,6 +227,35 @@ angular.module('rastrodelama')
   }
 ])
 
+.directive('messageMap', [
+  '$compile',
+  function($compile) {
+    return {
+      restrict: 'E',
+      scope: {
+        data: '='
+      },
+      link: function(scope, element, attrs) {
+
+        var template = '<ui-gmap-google-map center="map.center" zoom="map.zoom" options="map.options"><ui-gmap-marker coords="map.center" idkey="0"></ui-gmap-marker></ui-gmap-google-map>';
+
+        scope.$watch('data', function(data) {
+          var mapScope = scope.$new(true);
+          mapScope.map = {
+            center: data.location,
+            zoom: 16,
+            options: {
+              scrollwheel: false
+            }
+          };
+          jQuery(element).empty().append($compile(template)(mapScope));
+        });
+
+      }
+    }
+  }
+])
+
 .directive('messageImage', [
   function() {
     return {
