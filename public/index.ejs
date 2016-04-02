@@ -10,12 +10,20 @@
     <link rel="stylesheet" href="/assets/skeleton/css/skeleton.css" />
     <link rel="stylesheet" href="/styles/main.css" />
   </head>
-  <body ng-app="rastrodelama">
+  <body ng-controller="SiteCtrl">
 
     <header id="masthead">
-      <h1>Rastro de Lama</h1>
+      <nav id="auth_nav">
+        <a ui-sref="login" ng-hide="user">Login</a>
+        <a href="javascript:void(0);" ng-click="authObj.$unauth()" ng-show="user">Sair</a>
+      </nav>
+      <h1>
+        <a ui-sref="home">Rastro de Lama</a>
+      </h1>
       <p>Um documentário de Aline Lata e Helena Wolfenson</p>
     </header>
+
+    <div ui-view autoscroll="false"></div>
 
     <section id="description">
       <div class="container">
@@ -40,9 +48,12 @@
         <a>equipe de produção</a>
         <a>moradores</a>
       </nav>
-      <timeline items="messages" date-param="'date'"></timeline>
-      <!-- <message class="timeline-item" data-date="message.date" ng-repeat="message in messages | orderBy:'date':true" data="message"></message> -->
+      <timeline ng-show="messages.length" items="messages" date-param="'date'"></timeline>
+      <p ng-hide="messages.length" class="no-message">Nenhuma atividade foi publicada, ainda!</p>
     </section>
+
+    <footer id="colophon">
+    </footer>
 
     <!-- ASSETS -->
     <script type="text/javascript" src="/assets/jquery/dist/jquery.min.js"></script>
@@ -51,8 +62,11 @@
     <script type="text/javascript" src="/assets/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
     <script type="text/javascript" src="/assets/moment/min/locales.min.js"></script>
     <script type="text/javascript" src="/assets/underscore/underscore-min.js"></script>
+
     <script type="text/javascript" src="/assets/firebase/firebase.js"></script>
+
     <script type="text/javascript" src="/assets/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/assets/ui-router/release/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="/assets/angularfire/dist/angularfire.min.js"></script>
     <script type="text/javascript" src="/assets/angular-media-player/dist/angular-media-player.min.js"></script>
     <!-- -->

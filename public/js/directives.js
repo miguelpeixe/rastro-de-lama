@@ -18,83 +18,34 @@ angular.module('rastrodelama')
         '$filter',
         function($scope, $element, $compile, $filter) {
 
-          $element.append('<div class="clearfix"><div class="left-col"></div><div class="right-col"></div></div>');
+          $element.append('<div class="timeline-content"></div>');
+
+          var $container = jQuery($element).find('.timeline-content');
 
           var dayHeader = '<header><h2>{{formattedDate}}</h2></header>';
 
           var itemTemplate = '<message class="timeline-item" data="item"></message>';
 
-          function getItemsPerDay(items) {
-
-            var items = $filter('orderBy')($scope.items, $scope.dateParam, true);
-
-            if(items) {
-
-              var itemsPerDay = {};
-
-              items.forEach(function(item, i) {
-
-                var date = moment(item.date*1000);
-
-                var day;
-                if(date.isSame(moment(), 'day')) {
-                  day = 'Hoje';
-                } else {
-                  day = date.format('DD/MM/YYYY');
-                }
-
-                if(!itemsPerDay[day])
-                  itemsPerDay[day] = [];
-
-                itemsPerDay[day].push(item);
-
-              });
-            }
-
-            return itemsPerDay;
-          }
-
-          function buildDay(day, items) {
-            var dayScope = $scope.$new(true);
-            dayScope.formattedDate = day;
-            var $day = $compile('<section class="timeline-day clearfix">' + dayHeader + '<div class="left-col"></div><div class="right-col"></div></section>')(dayScope);
-            items[day].forEach(function(item, i) {
-              buildItem($day, item, i);
-            });
-            return $day;
-          }
-
-          function buildItem($container, item, i) {
-            var child = 'left-col';
-            if($(window).width() >= 900) {
-              if(i%2) child = 'right-col';
-            }
-            var scope = $scope.$new(true);
-            scope.item = item;
-            $container.find('.' + child).append($compile(itemTemplate)(scope));
-          }
-
           var itemsPerDay;
 
           $scope.$watch('items', function(items) {
-
             itemsPerDay = getItemsPerDay(items);
 
-            jQuery($element).empty();
+            $container.height($container.height());
+            $container.empty();
 
             if(items && items.length) {
               for(var day in itemsPerDay) {
-                $element.append(buildDay(day, itemsPerDay));
+                $container.append(buildDay(day, itemsPerDay));
               }
             }
+            $container.height('auto');
           }, true);
 
           var prevSize = false;
           $(window).resize(function() {
-
             if(!prevSize)
               prevSize = $(window).width();
-
             if(
               ($(window).width() >= 900 && prevSize < 900) ||
               ($(window).width() < 900 && prevSize >= 900)
@@ -104,10 +55,49 @@ angular.module('rastrodelama')
                 $element.append(buildDay(day, itemsPerDay));
               }
             }
-
             prevSize = $(window).width();
-
           });
+
+          function getItemsPerDay(items) {
+            var items = $filter('orderBy')($scope.items, $scope.dateParam, true);
+            if(items) {
+              var itemsPerDay = {};
+              items.forEach(function(item, i) {
+                var date = moment(item.date*1000);
+
+                var day;
+                if(date.isSame(moment(), 'day')) {
+                  day = 'Hoje';
+                } else {
+                  day = date.format('DD/MM/YYYY');
+                }
+                if(!itemsPerDay[day])
+                  itemsPerDay[day] = [];
+                itemsPerDay[day].push(item);
+              });
+            }
+            return itemsPerDay;
+          }
+
+          function buildDay(day, items) {
+            var dayScope = $scope.$new(false, $scope.$parent);
+            dayScope.formattedDate = day;
+            var $day = $compile('<section class="timeline-day clearfix">' + dayHeader + '<div class="left-col"></div><div class="right-col"></div></section>')(dayScope);
+            items[day].forEach(function(item, i) {
+              buildItem($day, dayScope, item, i);
+            });
+            return $day;
+          }
+
+          function buildItem($container, dayScope, item, i) {
+            var child = 'left-col';
+            if($(window).width() >= 900) {
+              if(i%2) child = 'right-col';
+            }
+            var itemScope = $scope.$new(false, dayScope);
+            itemScope.item = item;
+            $container.find('.' + child).append($compile(itemTemplate)(itemScope));
+          }
         }
       ]
     }
@@ -151,7 +141,10 @@ angular.module('rastrodelama')
 ])
 
 .directive('message', [
-  function() {
+  'fbDatabase',
+  '$firebaseObject',
+  '$firebaseAuth',
+  function(fbDatabase, $firebaseObject, $firebaseAuth) {
     return {
       restrict: 'E',
       scope: {
@@ -160,6 +153,47 @@ angular.module('rastrodelama')
       templateUrl: '/message.html',
       replace: true,
       link: function(scope, element, attrs) {
+
+        var ref = new Firebase(fbDatabase);
+        var messagesRef = ref.child('messages');
+        var publicRef = ref.child('public_messages');
+
+        scope.authObj = $firebaseAuth(ref);
+        scope.$watch(function() {
+          return scope.authObj.$getAuth();
+        }, function(auth) {
+          scope.user = auth;
+        });
+
+        scope.setPublic = function(item) {
+          if(scope.user) {
+            var newItem = _.clone(item);
+            for(var key in newItem) {
+              if(key.indexOf('$') == 0) {
+                delete newItem[key];
+              }
+            }
+
+            newItem.public = true;
+
+            $firebaseObject(messagesRef.child(item.$id))
+              .$loaded().then(function(data) {
+                _.extend(data, { public: true }).$save();
+              });
+            $firebaseObject(publicRef.child(item.$id))
+              .$loaded().then(function(data) {
+                _.extend(data, newItem).$save();
+              });
+          }
+        };
+
+        scope.setPrivate = function(item) {
+          $firebaseObject(messagesRef.child(item.$id))
+            .$loaded().then(function(data) {
+              _.extend(data, { public: false }).$save();
+            });
+          $firebaseObject(publicRef.child(item.$id)).$remove();
+        }
 
         scope.isToday = function(message) {
           return moment(message.date*1000).isSame(moment(), 'day');
