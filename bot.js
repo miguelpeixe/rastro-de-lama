@@ -7,12 +7,14 @@ module.exports = function(config, msgRef) {
   });
 
   bot.on('message', function(message) {
-    if(config.groupId) {
-      if(message.chat.id == config.groupId) {
+    if(!message.new_chat_participant) {
+      if(config.groupId) {
+        if(message.chat.id == config.groupId) {
+          msgRef.child(message.message_id).set(message);
+        }
+      } else {
         msgRef.child(message.message_id).set(message);
       }
-    } else {
-      msgRef.child(message.message_id).set(message);
     }
   });
 
