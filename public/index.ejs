@@ -44,12 +44,12 @@
         </div>
       </div>
       <nav id="messages_filters">
-        <a class="active">todas as publicações</a>
-        <a>equipe de produção</a>
-        <a>moradores</a>
+        <a href="javascript:void(0);" ng-click="selectTeam('')" ng-class="{active:!team}">todas as publicações</a>
+        <a href="javascript:void(0);" ng-click="selectTeam('core')" ng-class="{active:team=='core'}">equipe de produção</a>
+        <a href="javascript:void(0);" ng-click="selectTeam('guests')" ng-class="{active:team=='guests'}">moradores</a>
       </nav>
-      <timeline ng-show="messages.length" items="messages" date-param="'date'"></timeline>
-      <p ng-hide="messages.length" class="no-message">Nenhuma atividade foi publicada, ainda!</p>
+      <timeline ng-show="filteredMessages.length" items="filteredMessages = (messages | byTeam:team)" date-param="'date'"></timeline>
+      <p ng-hide="filteredMessages.length" class="no-message">Nenhuma atividade foi publicada, ainda!</p>
     </section>
 
     <footer id="colophon">
@@ -73,7 +73,7 @@
     <script type="text/javascript" src="/assets/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
     <script type="text/javascript" src="/assets/angular-google-maps/dist/angular-google-maps.min.js"></script>
     <!-- -->
-    
+
     <!-- GANALYTICS -->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

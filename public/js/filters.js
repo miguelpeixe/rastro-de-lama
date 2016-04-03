@@ -1,5 +1,31 @@
 angular.module('rastrodelama')
 
+.filter('byTeam', [
+  function() {
+
+    var teams = {
+      core: [
+        8194785 // miguel peixe
+      ],
+      guests: [
+
+      ]
+    };
+
+    return _.memoize(function(input, team) {
+      if(team) {
+        input = _.filter(input, function(item) {
+          return teams[team].indexOf(item.from.id) != -1;
+        });
+      }
+      return input;
+    }, function() {
+      return JSON.stringify(arguments[0]) + arguments[1];
+    });
+
+  }
+])
+
 .filter('parseUrl', [
   function() {
 

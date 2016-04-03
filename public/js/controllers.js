@@ -54,6 +54,12 @@ angular.module('rastrodelama')
       }
     }, true);
 
+    $scope.filteredMessages = [];
+    $scope.team = '';
+    $scope.selectTeam = function(team) {
+      $scope.team = team;
+    };
+
   }
 ])
 
