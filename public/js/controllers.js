@@ -8,6 +8,9 @@ angular.module('rastrodelama')
   function($scope, $state, fbDatabase, $firebaseAuth) {
 
     $scope.$on('$stateChangeSuccess', function(ev, toState) {
+      $('html,body').animate({
+        scrollTop: 0
+      }, 400);
       if(toState.name == 'home') {
         $scope.isHome = true;
       } else {

@@ -38,6 +38,10 @@ angular.module('rastrodelama', [
       url: '/login/',
       templateUrl: '/login.html',
       controller: 'AuthCtrl'
+    })
+    .state('doc', {
+      url: '/doc/',
+      templateUrl: '/doc.html'
     });
 
     /*

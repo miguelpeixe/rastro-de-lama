@@ -23,16 +23,16 @@
       <p>Um documentário de Aline Lata e Helena Wolfenson</p>
     </header>
 
-    <div ui-view autoscroll="false"></div>
-
-    <section id="description">
-      <div class="container">
-        <div class="eight columns offset-by-two">
-          <p>Não deixe que a história de pessoas que viveram a maior tragédia ambiental do Brasil seja esquecida</p>
-          <p><a class="button">Saiba mais sobre o documentário</a></p>
+    <div ui-view autoscroll="false">
+      <section id="description">
+        <div class="container">
+          <div class="eight columns offset-by-two">
+            <p>Não deixe que a história de pessoas que viveram a maior tragédia ambiental do Brasil seja esquecida</p>
+            <p><a class="button" ui-sref="doc">Saiba mais sobre o documentário</a></p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <section id="messages" ng-controller="MessagesCtrl">
       <div class="container">

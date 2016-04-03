@@ -2,7 +2,7 @@ body {
   background: #fff;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 300;
-  font-size: 1.8em;
+  font-size: 1.6em;
 }
 
 @link: #7e2a2a;
@@ -100,7 +100,7 @@ img {
     color: #fff;
     text-transform: lowercase;
     background: rgba(0,0,0,0.8);
-    font-size: 4rem;
+    font-size: 3.6rem;
     line-height: 1;
     padding: 20px 0;
     margin: 0;
@@ -121,7 +121,7 @@ img {
     top: 0;
     right: 0;
     padding: 10px;
-    font-size: .6em;
+    font-size: .8em;
     text-transform: lowercase;
     a {
       background: #000;
@@ -133,6 +133,8 @@ img {
 
 .inner-content {
   padding: 60px 0;
+  margin-bottom: 60px;
+  border-bottom: 1px solid #ddd;
 }
 
 #description {
@@ -140,15 +142,15 @@ img {
   color: #f0f0f0;
   text-align: center;
   padding: 60px 0 20px;
-  margin: 0 0 100px;
+  margin: 0 0 60px;
   p {
-    font-size: 2.5rem;
+    font-size: 2.4rem;
     margin: 0 0 40px;
   }
   .button {
     background: @link;
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     height: auto;
     line-height: 1.5;
     padding: 18px 30px;
@@ -161,7 +163,7 @@ img {
 
 #messages {
   #messages_header {
-    margin: 0 0 80px;
+    margin: 0 0 50px;
   }
   #messages_filters {
     text-align: center;
@@ -218,7 +220,7 @@ article.message {
     margin: 0;
   }
   .desc {
-    font-size: .8em;
+    font-size: .9em;
     font-weight: 600;
     margin: 0 0 2rem;
     text-align: center;
@@ -262,7 +264,7 @@ article.message {
     }
     p {
       margin: 0;
-      font-size: .8em;
+      font-size: .9em;
       color: #666;
     }
   }
@@ -470,11 +472,14 @@ article.message.audio {
 }
 
 @media (max-width: 900px) {
+  body {
+    // font-size: .8em;
+  }
   #masthead {
     padding: 0;
   }
-  body {
-    font-size: .8;
+  #page.inner-content {
+    padding: 60px 0;
   }
   .right-col {
     display: none;
