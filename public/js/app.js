@@ -88,7 +88,7 @@ angular.module('rastrodelama', [
       if(fromState.name) {
         $('html,body').animate({
           scrollTop: 0
-        }, 200);
+        }, 400);
       }
     });
   }
