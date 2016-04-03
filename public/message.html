@@ -2,7 +2,7 @@
   <div class="privacy-box" ng-show="user && !data.public">
     <div class="privacy-settings">
       <p>Esta publicação está pendente</p>
-      <a ng-click="setPublic(data)" href="javascript:void(0);">clique aqui para torná-la pública</a>
+      <a ng-click="setPublic(data)" href="javascript:void(0);">clique aqui para torná-la pública</a>, ou <a ng-click="remove(data)" href="javascript:void(0);">aqui para removê-la</a>.
     </div>
   </div>
   <div class="message-content">
@@ -13,6 +13,9 @@
       <span class="time hour" ng-hide="isToday(data)"> às {{(data.date*1000) | formatDate:'HH:mm'}},</span>
       <span class="time fromnow" ng-show="isToday(data)"> {{(data.date*1000) | fromNow}},</span> por <span class="author">{{data.from.first_name}} {{data.from.last_name}}</span>
     </p>
-    <p ng-show="user && data.public"><a ng-click="setPrivate(data)" href="javascript:void(0);">Tornar privado</a></p>
+    <p ng-show="user && data.public">
+      <a ng-click="setPrivate(data)" href="javascript:void(0);">Tornar privado</a> &middot;
+      <a ng-click="remove(data)" href="javascript:void(0);">Remover</a>
+    </p>
   </footer>
 </article>

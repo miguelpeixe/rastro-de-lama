@@ -187,6 +187,13 @@ angular.module('rastrodelama')
           }
         };
 
+        scope.remove = function(item) {
+          if(confirm('Você tem certeza?')) {
+            $firebaseObject(publicRef.child(item.$id)).$remove();
+            $firebaseObject(messagesRef.child(item.$id)).$remove();
+          }
+        }
+
         scope.setPrivate = function(item) {
           $firebaseObject(messagesRef.child(item.$id))
             .$loaded().then(function(data) {
