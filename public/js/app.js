@@ -45,8 +45,8 @@ angular.module('rastrodelama', [
     });
 
     /*
-     * Trailing slash rule
-     */
+    * Trailing slash rule
+    */
     $urlRouterProvider.rule(function($injector, $location) {
       var path = $location.path(),
       search = $location.search(),
@@ -71,6 +71,26 @@ angular.module('rastrodelama', [
       return path + '/?' + params.join('&');
     });
 
+  }
+])
+
+.run([
+  '$rootScope',
+  '$location',
+  '$window',
+  function($rootScope, $location, $window) {
+    $rootScope.$on('$stateChangeSuccess', function(ev, toState, toParams, fromState, fromParams) {
+      // Analytics
+      if($window._gaq && fromState.name) {
+        $window._gaq.push(['_trackPageview', $location.path()]);
+      }
+      // Scroll top
+      if(fromState.name) {
+        $('html,body').animate({
+          scrollTop: 0
+        }, 200);
+      }
+    });
   }
 ]);
 
