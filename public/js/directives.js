@@ -237,12 +237,13 @@ angular.module('rastrodelama')
       },
       link: function(scope, element, attrs) {
 
-        var template = '<ui-gmap-google-map center="map.center" zoom="map.zoom" options="map.options"><ui-gmap-marker coords="map.center" idkey="0"></ui-gmap-marker></ui-gmap-google-map>';
+        var template = '<ui-gmap-google-map center="map.center" zoom="map.zoom" options="map.options"><ui-gmap-marker coords="map.marker" idkey="0"></ui-gmap-marker></ui-gmap-google-map>';
 
-        scope.$watch('data', function(data) {
+        scope.$watch('data.location', function(location) {
           var mapScope = scope.$new(true);
           mapScope.map = {
-            center: data.location,
+            center: _.clone(location),
+            marker: _.clone(location),
             zoom: 16,
             options: {
               scrollwheel: false
