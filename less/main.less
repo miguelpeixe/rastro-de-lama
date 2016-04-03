@@ -271,12 +271,17 @@ article.message {
   .privacy-box {
     position: absolute;
     z-index: 2;
-    top: 0;
+    top: 50%;
     left: 0;
     right: 0;
-    margin: 20%;
+    margin: -50px 20% 0;
     border: 3px solid @lighter_link;
     box-shadow: 0 0 40px 10px rgba(0,0,0,0.17);
+    opacity: .8;
+    transition: all .2s linear;
+    &:hover {
+      opacity: 1;
+    }
     .privacy-settings {
       text-align: center;
       background: #fff;
