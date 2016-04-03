@@ -30,9 +30,9 @@ angular.module('rastrodelama')
   function($sce) {
     return function(input) {
       if(input)
-      return $sce.trustAsHtml(input);
+        return $sce.trustAsHtml(input);
       else
-      return input;
+        return input;
     }
   }
 ])
