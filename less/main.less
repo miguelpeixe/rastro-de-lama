@@ -158,6 +158,29 @@ img {
   }
 }
 
+#team {
+  h2 {
+    font-size: 2rem;
+    background: #000;
+    color: #fff;
+    padding: 10px;
+    line-height: 1;
+  }
+  .team-group {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 3rem;
+    padding: 3rem 0;
+    &:last-child {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-bottom: 0;
+    }
+  }
+  .three.columns {
+    text-align: right;
+  }
+}
+
 #description {
   background: #000;
   color: #f0f0f0;
@@ -524,7 +547,7 @@ article.message.audio {
       font-size: .6em;
     }
   }
-  #page.inner-content {
+  .inner-content {
     padding: 60px 0;
   }
   .right-col {
