@@ -86,7 +86,6 @@ angular.module('rastrodelama', [
   function($rootScope, $location, $window) {
     $rootScope.$on('$stateChangeSuccess', function(ev, toState, toParams, fromState, fromParams) {
       // Analytics
-      console.log($window.ga);
       if($window._gaq && fromState.name) {
         $window._gaq.push(['_trackPageview', $location.path()]);
       }
