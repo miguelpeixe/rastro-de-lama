@@ -1,5 +1,6 @@
 var express = require('express');
 var expressLess = require('express-less');
+var assets = require('connect-assets');
 var request = require('request');
 var Q = require('q');
 var fs = require('fs');
@@ -22,11 +23,22 @@ module.exports = function(config, fileRef, bot) {
 
   app.use('/', express.static(__dirname + '/public'));
 
-  app.use('/assets', express.static(__dirname + '/bower_components'));
+  // app.use('/assets', express.static(__dirname + '/bower_components'));
 
   app.use('/styles', expressLess(__dirname + '/less', {compress: true}));
 
   app.set('view engine', 'ejs');
+
+  app.use(assets({
+    paths: [
+      'public/js',
+      'bower_components'
+    ],
+    build: true,
+    compress: true,
+    gzip: true,
+    sourceMaps: false
+  }));
 
   var fileDir = 'files';
 

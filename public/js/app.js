@@ -10,13 +10,15 @@ angular.module('rastrodelama', [
 
 .constant('fbDatabase', fbDatabase)
 
-.config(function(uiGmapGoogleMapApiProvider) {
-  uiGmapGoogleMapApiProvider.configure({
-    key: 'AIzaSyByV053mUkTmAfQStWjRpA0sFmAWE_SP6M',
-    v: '3.20', //defaults to latest 3.X anyhow
-    libraries: 'weather,geometry,visualization'
-  });
-})
+.config(['uiGmapGoogleMapApiProvider',
+  function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+      key: 'AIzaSyByV053mUkTmAfQStWjRpA0sFmAWE_SP6M',
+      v: '3.20', //defaults to latest 3.X anyhow
+      libraries: 'weather,geometry,visualization'
+    });
+  }
+])
 
 .config([
   '$stateProvider',

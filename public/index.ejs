@@ -77,28 +77,6 @@
         </div>
       </div>
     </footer>
-
-    <!-- ASSETS -->
-    <script type="text/javascript" src="/assets/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="/assets/moment/min/moment.min.js"></script>
-    <script type="text/javascript" src="/assets/moment/locale/pt-br.js"></script>
-    <script type="text/javascript" src="/assets/moment-timezone/builds/moment-timezone-with-data.min.js"></script>
-    <script type="text/javascript" src="/assets/moment/min/locales.min.js"></script>
-    <script type="text/javascript" src="/assets/underscore/underscore-min.js"></script>
-    <script type="text/javascript" src="/assets/lodash/dist/lodash.min.js"></script>
-
-    <script type="text/javascript" src="/assets/firebase/firebase.js"></script>
-
-    <script type="text/javascript" src="/assets/angular/angular.min.js"></script>
-    <script type="text/javascript" src="/assets/angular-fitvids/angular-fitvids.js"></script>
-    <script type="text/javascript" src="/assets/ui-router/release/angular-ui-router.min.js"></script>
-    <script type="text/javascript" src="/assets/angularfire/dist/angularfire.min.js"></script>
-    <script type="text/javascript" src="/assets/angular-media-player/dist/angular-media-player.min.js"></script>
-    <script type="text/javascript" src="/assets/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
-    <script type="text/javascript" src="/assets/angular-google-maps/dist/angular-google-maps.min.js"></script>
-    <!-- -->
-
-    <!-- GANALYTICS -->
     <script>
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', "UA-75887558-1"]);
@@ -109,18 +87,11 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     </script>
-    <!-- -->
-
-    <!-- APP -->
     <script type="text/javascript">
       (function() {
         fbDatabase = "<%= fbDatabase %>";
       })();
     </script>
-    <script type="text/javascript" src="/js/app.js"></script>
-    <script type="text/javascript" src="/js/filters.js"></script>
-    <script type="text/javascript" src="/js/controllers.js"></script>
-    <script type="text/javascript" src="/js/directives.js"></script>
-    <!-- -->
+    <%- js('dist.js') %>
   </body>
 </html>
