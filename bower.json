@@ -24,6 +24,7 @@
     "moment": "~2.12.0",
     "moment-timezone": "~0.5.3",
     "fontawesome": "~4.5.0",
-    "angular-google-maps": "~2.3.2"
+    "angular-google-maps": "~2.3.2",
+    "angular-fitvids": "jimmyhillis/angular-fitvids#~0.1.0"
   }
 }

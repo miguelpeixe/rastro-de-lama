@@ -4,6 +4,7 @@ angular.module('rastrodelama', [
   'ui.router',
   'firebase',
   'mediaPlayer',
+  'fitVids',
   'uiGmapgoogle-maps'
 ])
 
