@@ -19,10 +19,11 @@ module.exports = function(config, fileRef, bot) {
 
   var app = express();
 
+  app.use(require('compression')());
+
   app.engine('html', require('ejs').renderFile);
 
   app.use('/', express.static(__dirname + '/public'));
-
   // app.use('/assets', express.static(__dirname + '/bower_components'));
 
   app.use('/styles', expressLess(__dirname + '/less', {compress: true}));
