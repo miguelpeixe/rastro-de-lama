@@ -21,7 +21,7 @@ module.exports = function(config, msgRef) {
     }
   });
 
-  // bot.start();
+  bot.start();
 
   return bot;
 
