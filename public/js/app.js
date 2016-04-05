@@ -88,7 +88,7 @@ angular.module('rastrodelama', [
   function($rootScope, $location, $window) {
     $rootScope.$on('$stateChangeSuccess', function(ev, toState, toParams, fromState, fromParams) {
       // Analytics
-      if($window._gaq && fromState.name) {
+      if($window._gaq) {
         $window._gaq.push(['_trackPageview', $location.path()]);
       }
       // Scroll top
