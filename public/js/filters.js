@@ -6,7 +6,8 @@ angular.module('rastrodelama')
     var teams = {
       core: [
         8194785, // miguel peixe
-        53490873 // helena wolfenson
+        53490873, // helena wolfenson
+        201010328 // adriana barbosa
       ],
       guests: [
 
