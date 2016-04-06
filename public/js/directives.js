@@ -144,11 +144,13 @@ angular.module('rastrodelama')
   'fbDatabase',
   '$firebaseObject',
   '$firebaseAuth',
-  function(fbDatabase, $firebaseObject, $firebaseAuth) {
+  '$state',
+  function(fbDatabase, $firebaseObject, $firebaseAuth, $state) {
     return {
       restrict: 'E',
       scope: {
-        data: '='
+        data: '=',
+        dateFormat: '@'
       },
       templateUrl: '/message.html',
       replace: true,
@@ -173,9 +175,7 @@ angular.module('rastrodelama')
                 delete newItem[key];
               }
             }
-
             newItem.public = true;
-
             $firebaseObject(messagesRef.child(item.$id))
               .$loaded().then(function(data) {
                 _.extend(data, { public: true }).$save();
@@ -205,6 +205,16 @@ angular.module('rastrodelama')
         scope.isToday = function(message) {
           return moment(message.date*1000).isSame(moment(), 'day');
         }
+
+        scope.dateFormat = scope.dateFormat || 'relative';
+
+        scope.isFull = function() {
+          return scope.dateFormat == 'full';
+        };
+
+        scope.getUrl = function() {
+          return encodeURIComponent($state.href('message', {id: scope.data.message_id}, {absolute: true}));
+        };
 
         scope.getTemplateUrl = function() {
           if(scope.data) {

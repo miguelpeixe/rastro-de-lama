@@ -8,10 +8,13 @@ angular.module('rastrodelama')
   function($scope, $state, fbDatabase, $firebaseAuth) {
 
     $scope.$on('$stateChangeSuccess', function(ev, toState) {
-      if(toState.name == 'home') {
-        $scope.isHome = true;
-      } else {
-        $scope.isHome = false;
+      $scope.isHome = true;
+      if(toState.name !== 'message') {
+        if(toState.name == 'home') {
+          $scope.isHome = true;
+        } else {
+          $scope.isHome = false;
+        }
       }
     });
 
@@ -60,6 +63,42 @@ angular.module('rastrodelama')
       $scope.team = team;
     };
 
+  }
+])
+
+.controller('SingleMessageCtrl', [
+  '$scope',
+  '$state',
+  '$stateParams',
+  'fbDatabase',
+  '$firebaseObject',
+  'ngDialog',
+  function($scope, $state, $stateParams, fbDatabase, $firebaseObject, ngDialog) {
+    var ref = new Firebase(fbDatabase);
+    var messageRef = ref.child('public_messages/' + $stateParams.id);
+    $scope.data = $firebaseObject(messageRef);
+    $scope.dialog = ngDialog.open({
+      plain: true,
+      template: '<message data="data" date-format="full"></message>',
+      scope: $scope,
+      preCloseCallback: function(value) {
+        $scope.dialog = false;
+        $state.go('home');
+        return true;
+      }
+    });
+    $scope.$on('$stateChangeSuccess', function(ev, toState, toParams, fromState) {
+      if(toState.name == 'message' && !fromState.name) {
+        $('html,body').animate({
+          scrollTop: $('#messages').offset().top
+        }, 400);
+      }
+    })
+    $scope.$on('$stateChangeStart', function() {
+      if($scope.dialog) {
+        $scope.dialog.close();
+      }
+    });
   }
 ])
 

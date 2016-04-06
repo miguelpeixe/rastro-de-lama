@@ -24,7 +24,7 @@ module.exports = function(config, fileRef, bot) {
   app.engine('html', require('ejs').renderFile);
 
   app.use('/', express.static(__dirname + '/public'));
-  // app.use('/assets', express.static(__dirname + '/bower_components'));
+  app.use('/components', express.static(__dirname + '/bower_components'));
 
   app.use('/styles', expressLess(__dirname + '/less', {compress: true}));
 
@@ -38,7 +38,8 @@ module.exports = function(config, fileRef, bot) {
     build: true,
     compress: true,
     gzip: true,
-    sourceMaps: false
+    sourceMaps: false,
+    fingerprinting: true
   }));
 
   var fileDir = 'files';

@@ -2,6 +2,7 @@ moment.locale('pt-br');
 
 angular.module('rastrodelama', [
   'ui.router',
+  'ngDialog',
   'firebase',
   'mediaPlayer',
   'fitVids',
@@ -36,6 +37,10 @@ angular.module('rastrodelama', [
     $stateProvider
     .state('home', {
       url: '/'
+    })
+    .state('message', {
+      url: '/message/:id/',
+      controller: 'SingleMessageCtrl'
     })
     .state('login', {
       url: '/login/',
@@ -92,7 +97,10 @@ angular.module('rastrodelama', [
         $window._gaq.push(['_trackPageview', $location.path()]);
       }
       // Scroll top
-      if(fromState.name) {
+      if(
+        fromState.name &&
+        (fromState.name != 'message' && toState.name != 'message')
+      ) {
         $('html,body').animate({
           scrollTop: 0
         }, 400);

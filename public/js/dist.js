@@ -7,6 +7,7 @@
 //= require firebase/firebase
 
 //= require angular/angular.min
+//= require ng-dialog/js/ngDialog.min
 //= require angular-fitvids/angular-fitvids
 //= require ui-router/release/angular-ui-router.min
 //= require angularfire/dist/angularfire.min

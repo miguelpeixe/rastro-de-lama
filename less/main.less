@@ -262,6 +262,35 @@ article.message {
     border: 1px solid #eee;
     padding: 5%;
     margin: 0;
+    position: relative;
+    .share {
+      position: absolute;
+      z-index: 100;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255,255,255,0.8);
+      text-align: right;
+      padding: 0 20px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .2s linear;
+      a {
+        color: #333;
+        margin-left: 15px;
+        line-height: 2.5em;
+        font-size: 2rem;
+        &:hover {
+          color: @link;
+        }
+      }
+    }
+    &:hover {
+      .share {
+        pointer-events: auto;
+        opacity: 1;
+      }
+    }
   }
   .desc {
     font-size: .9em;
@@ -486,6 +515,9 @@ article.message.audio {
       }
     }
   }
+  .timeline-day {
+    padding-bottom: 5%;
+  }
   .timeline-item {
     margin-bottom: 5.4%;
     position: relative;
@@ -530,6 +562,18 @@ article.message.audio {
       margin-bottom: 9px;
     }
   }
+}
+
+.ngdialog-overlay {
+  background: rgba(0,0,0,0.7);
+}
+
+.ngdialog.ngdialog-theme-default .ngdialog-content {
+  width: 80%;
+  border-radius: 0;
+  padding: 0;
+  line-height: inherit;
+  background: #fff;
 }
 
 @media (max-width: 660px) {

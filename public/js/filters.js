@@ -7,6 +7,7 @@ angular.module('rastrodelama')
       core: [
         8194785, // miguel peixe
         53490873, // helena wolfenson
+        165708632, // aline lata
         201010328 // adriana barbosa
       ],
       guests: [
@@ -77,6 +78,8 @@ angular.module('rastrodelama')
   function() {
     return _.memoize(function(input, format) {
       return moment(input).tz(moment.tz.guess()).format(format);
+    }, function() {
+      return arguments[0] + arguments[1];
     });
   }
 ]);
