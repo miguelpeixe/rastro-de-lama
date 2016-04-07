@@ -28,8 +28,14 @@ angular.module('rastrodelama')
 
           var itemsPerDay;
 
-          $scope.$watch('items', function(items) {
-            console.log('updated', items.length);
+          var windowWidth = $(window).width();
+
+          var itemCache = {};
+
+          $scope.$watch('items', _.throttle(function(items) {
+
+            windowWidth = $(window).width();
+
             itemsPerDay = getItemsPerDay(items);
 
             $container.height($container.height());
@@ -41,15 +47,16 @@ angular.module('rastrodelama')
               }
             }
             $container.height('auto');
-          }, true);
+          }, true), 250);
 
           var prevSize = false;
           $(window).resize(function() {
+            var width = $(window).width();
             if(!prevSize)
               prevSize = $(window).width();
             if(
-              ($(window).width() >= 900 && prevSize < 900) ||
-              ($(window).width() < 900 && prevSize >= 900)
+              (width >= 900 && prevSize < 900) ||
+              (width < 900 && prevSize >= 900)
               ) {
               jQuery($element).empty();
               for(var day in itemsPerDay) {
@@ -80,23 +87,28 @@ angular.module('rastrodelama')
           }
 
           function buildDay(day, items) {
-            var dayScope = $scope.$new(false, $scope.$parent);
-            dayScope.formattedDate = day;
-            var $day = $compile('<section class="timeline-day clearfix">' + dayHeader + '<div class="left-col"></div><div class="right-col"></div></section>')(dayScope);
+            if(!itemCache[day]) {
+              var dayScope = $scope.$new(false, $scope.$parent);
+              dayScope.formattedDate = day;
+              itemCache[day] = $compile('<section class="timeline-day clearfix">' + dayHeader + '<div class="left-col"></div><div class="right-col"></div></section>')(dayScope);
+            }
             items[day].forEach(function(item, i) {
-              buildItem($day, dayScope, item, i);
+              buildItem(itemCache[day], dayScope, item, i);
             });
-            return $day;
+            return itemCache[day];
           }
 
           function buildItem($container, dayScope, item, i) {
             var child = 'left-col';
-            if($(window).width() >= 900) {
+            if(windowWidth >= 900) {
               if(i%2) child = 'right-col';
             }
-            var itemScope = $scope.$new(false, dayScope);
-            itemScope.item = item;
-            $container.find('.' + child).append($compile(itemTemplate)(itemScope));
+            if(!itemCache[item.message_id]) {
+              var itemScope = $scope.$new(false, dayScope);
+              itemScope.item = item;
+              itemCache[item.message_id] = $compile(itemTemplate)(itemScope);
+            }
+            $container.find('.' + child).append(itemCache[item.message_id]);
           }
         }
       ]

@@ -1,5 +1,7 @@
 moment.locale('pt-br');
 
+angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 250)
+
 angular.module('rastrodelama', [
   'ui.router',
   'ngDialog',
@@ -9,6 +11,7 @@ angular.module('rastrodelama', [
   'fitVids',
   'uiGmapgoogle-maps'
 ])
+
 
 .constant('fbDatabase', fbDatabase)
 

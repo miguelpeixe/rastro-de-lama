@@ -59,12 +59,19 @@ angular.module('rastrodelama')
       }
       $scope.messages = $firebaseArray(scrollRef);
       $scope.messages.scroll = scrollRef.scroll;
-      
-      $scope.loading = true;
-      $scope.messages.$loaded().then(function() {
-        $scope.loading = false;
-      });
     }, true);
+
+    $scope.loading = true;
+
+    $scope.$watch(function() {
+      if(scrollRef.scroll) {
+        return scrollRef.scroll.hasNext();
+      } else {
+        return true;
+      }
+    }, _.debounce(function(has) {
+      $scope.loading = has;
+    }), 100);
 
     $scope.filteredMessages = [];
     $scope.team = '';
