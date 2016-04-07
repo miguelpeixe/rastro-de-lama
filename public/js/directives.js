@@ -29,6 +29,7 @@ angular.module('rastrodelama')
           var itemsPerDay;
 
           $scope.$watch('items', function(items) {
+            console.log('updated', items.length);
             itemsPerDay = getItemsPerDay(items);
 
             $container.height($container.height());
@@ -59,7 +60,6 @@ angular.module('rastrodelama')
           });
 
           function getItemsPerDay(items) {
-            var items = $filter('orderBy')($scope.items, $scope.dateParam, true);
             if(items) {
               var itemsPerDay = {};
               items.forEach(function(item, i) {

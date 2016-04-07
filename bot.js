@@ -11,6 +11,7 @@ module.exports = function(config, msgRef) {
       !message.new_chat_participant &&
       !message.sticker
     ) {
+      message.reverse_date = -message.date;
       if(config.groupId) {
         if(message.chat.id == config.groupId) {
           msgRef.child(message.message_id).set(message);

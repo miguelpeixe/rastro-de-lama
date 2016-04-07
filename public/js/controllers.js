@@ -49,12 +49,21 @@ angular.module('rastrodelama')
     var messagesRef = ref.child('messages');
     var publicRef = ref.child('public_messages');
 
+    var scrollRef;
+
     $scope.$watch('user', function(u) {
       if(u) {
-        $scope.messages = $firebaseArray(messagesRef);
+        scrollRef = new Firebase.util.Scroll(messagesRef, 'reverse_date');
       } else {
-        $scope.messages = $firebaseArray(publicRef);
+        scrollRef = new Firebase.util.Scroll(publicRef, 'reverse_date');
       }
+      $scope.messages = $firebaseArray(scrollRef);
+      $scope.messages.scroll = scrollRef.scroll;
+      
+      $scope.loading = true;
+      $scope.messages.$loaded().then(function() {
+        $scope.loading = false;
+      });
     }, true);
 
     $scope.filteredMessages = [];

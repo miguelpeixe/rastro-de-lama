@@ -3,6 +3,7 @@ moment.locale('pt-br');
 angular.module('rastrodelama', [
   'ui.router',
   'ngDialog',
+  'infinite-scroll',
   'firebase',
   'mediaPlayer',
   'fitVids',
