@@ -8,7 +8,9 @@ angular.module('rastrodelama')
         8194785, // miguel peixe
         53490873, // helena wolfenson
         165708632, // aline lata
-        201010328 // adriana barbosa
+        201010328, // adriana barbosa
+        197696199, // silvi medeiros
+        12820836 // fred frança
       ],
       guests: [
 
