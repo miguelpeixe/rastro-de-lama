@@ -32,6 +32,8 @@ angular.module('rastrodelama')
 
           var itemCache = {};
 
+          var changed = 0;
+
           $scope.$watch('items', _.throttle(function(items) {
 
             windowWidth = $(window).width();
@@ -39,13 +41,17 @@ angular.module('rastrodelama')
             itemsPerDay = getItemsPerDay(items);
 
             $container.height($container.height());
-            $container.empty();
+
+            $container.find('.v-' + changed).hide();
+            changed++;
 
             if(items && items.length) {
+              $container.append('<div class="v-' + changed + '" />');
               for(var day in itemsPerDay) {
-                $container.append(buildDay(day, itemsPerDay));
+                $container.find('.v-' + changed).append(buildDay(day, itemsPerDay));
               }
             }
+            $container.find('.v-' + (changed-1)).remove();
             $container.height('auto');
           }, true), 250);
 
@@ -90,7 +96,9 @@ angular.module('rastrodelama')
             if(!itemCache[day]) {
               var dayScope = $scope.$new(false, $scope.$parent);
               dayScope.formattedDate = day;
-              itemCache[day] = $compile('<section class="timeline-day clearfix">' + dayHeader + '<div class="left-col"></div><div class="right-col"></div></section>')(dayScope);
+              $compile('<section class="timeline-day clearfix">' + dayHeader + '<div class="left-col"></div><div class="right-col"></div></section>')(dayScope, function(compiled) {
+                itemCache[day] = compiled;
+              });
             }
             items[day].forEach(function(item, i) {
               buildItem(itemCache[day], dayScope, item, i);
@@ -106,7 +114,9 @@ angular.module('rastrodelama')
             if(!itemCache[item.message_id]) {
               var itemScope = $scope.$new(false, dayScope);
               itemScope.item = item;
-              itemCache[item.message_id] = $compile(itemTemplate)(itemScope);
+              $compile(itemTemplate)(itemScope, function(compiled) {
+                itemCache[item.message_id] = compiled;
+              });
             }
             $container.find('.' + child).append(itemCache[item.message_id]);
           }

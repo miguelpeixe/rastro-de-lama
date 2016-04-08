@@ -49,9 +49,12 @@ angular.module('rastrodelama')
     var messagesRef = ref.child('messages');
     var publicRef = ref.child('public_messages');
 
-    var scrollRef;
+    var scrollRef = false;
 
     $scope.$watch('user', function(u) {
+      if(scrollRef) {
+        scrollRef.scroll.destroy();
+      }
       if(u) {
         scrollRef = new Firebase.util.Scroll(messagesRef, 'reverse_date');
       } else {
