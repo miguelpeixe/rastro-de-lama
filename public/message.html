@@ -7,12 +7,15 @@
   </div>
   <div class="message-content">
     <div ng-include="getTemplateUrl()"></div>
+    <p class="caption" ng-show="data.caption">{{data.caption}}</p>
     <section class="share">
       <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{getUrl()}}" target="_blank" class="fa fa-facebook"></a>
       <a href="https://twitter.com/home?status={{getUrl()}}" target="_blank" class="fa fa-twitter"></a>
       <a ui-sref="message({id: data.message_id})" class="fa fa-link"></a>
     </section>
   </div>
+  <section class="caption" ng-show="data.caption">
+  </section>
   <footer class="meta">
     <p>
       <a ui-sref="message({id: data.message_id})">Enviado
