@@ -22,6 +22,7 @@
     "mmmagic": "^0.4.1",
     "node-telegram-bot": "depoio/node-telegram-bot#9c95b3f",
     "q": "^1.4.1",
-    "request": "^2.69.0"
+    "request": "^2.69.0",
+    "underscore": "^1.8.3"
   }
 }

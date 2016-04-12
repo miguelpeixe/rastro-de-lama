@@ -2,15 +2,11 @@
 <html lang="pt-br">
   <head>
     <meta charset="utf-8" />
-    <title>Rastro de Lama</title>
+    <title><%= title %> | <%= subtitle %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1, user-scalable=no">
-
-    <meta name="description" content="Documentário sobre as transformações na vida de dois jovens que vivem na área atingida pelo maior crime socioambiental do Brasil. Acompanhe o Diário de Bordo da equipe e dos personagens durante as gravações." />
-    <meta name="keywords" content="mariana,bento rodrigues,samarco,desastre,tragédia ambiental,lama,lama tóxica,documentário" />
-    <meta property="og:image" content="http://www.rastrodelama.com.br/img/header-bg2.jpg" />
-    <meta property="og:title" content="Rastro de Lama" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="http://www.rastrodelama.com.br/" />
+    <% for(var name in meta) { %>
+      <meta name="<%= name %>" content="<%= meta[name] %>" />
+    <% } %>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic|Sintony:400,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/components/fontawesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/components/ng-dialog/css/ngDialog.min.css" />
@@ -27,9 +23,9 @@
         <a href="javascript:void(0);" ng-click="authObj.$unauth()" ng-show="user">Sair</a>
       </nav>
       <h1>
-        <a ui-sref="home">Rastro de Lama</a>
+        <a ui-sref="home"><%= site_title %></a>
       </h1>
-      <p>Um documentário de Aline Lata e Helena Wolfenson</p>
+      <p><%= subtitle %></p>
     </header>
 
     <div ui-view autoscroll="false">

@@ -33,8 +33,7 @@ angular.module('rastrodelama', [
   function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
 
     $locationProvider.html5Mode({
-      enabled: false,
-      requireBase: false
+      enabled: false
     });
     $locationProvider.hashPrefix('!');
 
