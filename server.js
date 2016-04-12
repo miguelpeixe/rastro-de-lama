@@ -217,6 +217,8 @@ module.exports = function(config, messageRef, fileRef, bot) {
           title += ' de ' + data.from.first_name + ' ' + data.from.last_name;
           headers['og:title'] = title + ' | ' + headers['og:title'];
           deferred.resolve(headers);
+        }, function(err) {
+          deferred.resolve(headers);
         });
       }
     } else {
