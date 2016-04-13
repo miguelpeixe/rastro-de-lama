@@ -21,14 +21,14 @@ angular.module('rastrodelama')
     };
 
     return _.memoize(function(input, team) {
-      if(team) {
+      if(input && input.length && team) {
         input = _.filter(input, function(item) {
           return teams[team].indexOf(item.from.id) != -1;
         });
       }
       return input;
     }, function() {
-      return JSON.stringify(arguments[0]) + arguments[1];
+      return JSON.stringify(arguments);
     });
 
   }

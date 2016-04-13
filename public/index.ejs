@@ -57,10 +57,10 @@
         <a href="javascript:void(0);" ng-click="selectTeam('guests')" ng-class="{active:team=='guests'}">moradores</a>
       </nav>
       <div
-      infinite-scroll="messages.scroll.next(7)"
-      infinite-scroll-distance="0" infinite-scroll-disabled="!messages.scroll.hasNext()"
-      >
-        <timeline ng-show="filteredMessages.length" items="filteredMessages = (messages | byTeam:team)" date-param="'date'"></timeline>
+      infinite-scroll="scroll()"
+      infinite-scroll-distance="0"
+      infinite-scroll-disabled="disabledScroll(filteredMessages)">
+        <timeline ng-show="filteredMessages.length" items="filteredMessages = (messages | byTeam:team)" date-param="'date'" limit="messagesLimit"></timeline>
       </div>
       <p ng-hide="filteredMessages.length || loading" class="no-message">Nenhuma atividade foi publicada, ainda!</p>
       <p ng-show="loading" class="no-message">Carregando publicações...</p>

@@ -6,6 +6,7 @@ angular.module('rastrodelama')
       restrict: 'E',
       scope: {
         'items': '=',
+        'limit': '=',
         'dateParam': '='
       },
       template: '<div class="timeline"></div>',
@@ -14,8 +15,7 @@ angular.module('rastrodelama')
         '$scope',
         '$element',
         '$compile',
-        '$filter',
-        function($scope, $element, $compile, $filter) {
+        function($scope, $element, $compile) {
 
           $element.append('<div class="timeline-content"></div>');
 
@@ -33,26 +33,18 @@ angular.module('rastrodelama')
 
           var changed = 0;
 
-          $scope.$watch('items', _.throttle(function(items) {
-
-            windowWidth = $(window).width();
-
-            itemsPerDay = getItemsPerDay(items);
-
-            $container.height($container.height());
-
-            $container.find('.v-' + changed).hide();
-            changed++;
-
+          $scope.$watch('items', function(items) {
             if(items && items.length) {
-              $container.append('<div class="v-' + changed + '" />');
-              for(var day in itemsPerDay) {
-                $container.find('.v-' + changed).append(buildDay(day, itemsPerDay));
-              }
+              var limit = $scope.limit || items.length;
+              update(items.slice(0, limit));
             }
-            $container.find('.v-' + (changed-1)).remove();
-            $container.height('auto');
-          }, true), 250);
+          }, true);
+
+          $scope.$watch('limit', function(limit) {
+            if($scope.items && $scope.items.length) {
+              update($scope.items.slice(0, limit));
+            }
+          });
 
           var prevSize = false;
           $(window).resize(function() {
@@ -71,8 +63,22 @@ angular.module('rastrodelama')
             prevSize = $(window).width();
           });
 
+          function update(data) {
+            windowWidth = $(window).width();
+            $container.height($container.height());
+            $container.find('.v-' + changed).hide();
+            changed++;
+            itemsPerDay = getItemsPerDay(data);
+            $container.append('<div class="v-' + changed + '" />');
+            for(var day in itemsPerDay) {
+              $container.find('.v-' + changed).append(buildDay(day, itemsPerDay));
+            }
+            $container.find('.v-' + (changed-1)).remove();
+            $container.height('auto');
+          }
+
           function getItemsPerDay(items) {
-            if(items) {
+            if(items && items.length) {
               var itemsPerDay = {};
               items.forEach(function(item, i) {
                 var date = moment(item.date*1000);
@@ -98,6 +104,8 @@ angular.module('rastrodelama')
               $compile('<section class="timeline-day clearfix">' + dayHeader + '<div class="left-col"></div><div class="right-col"></div></section>')(dayScope, function(compiled) {
                 itemCache[day] = compiled;
               });
+            } else {
+              jQuery(itemCache[day]).find('.timeline-item').hide();
             }
             items[day].forEach(function(item, i) {
               buildItem(itemCache[day], dayScope, item, i);
@@ -116,6 +124,8 @@ angular.module('rastrodelama')
               $compile(itemTemplate)(itemScope, function(compiled) {
                 itemCache[item.message_id] = compiled;
               });
+            } else {
+              jQuery(itemCache[item.message_id]).show();
             }
             $container.find('.' + child).append(itemCache[item.message_id]);
           }
@@ -256,7 +266,7 @@ angular.module('rastrodelama')
           if(scope.data.type) {
             return '/messages/' + scope.data.type + '.html';
           } else {
-            return null
+            return null;
           }
         }
 

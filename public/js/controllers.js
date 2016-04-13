@@ -51,40 +51,36 @@ angular.module('rastrodelama')
       $scope.user = auth;
     });
 
-    var messagesRef = ref.child('messages');
-    var publicRef = ref.child('public_messages');
-
-    var scrollRef;
-
-    $scope.$watch('user', function(u) {
-      if($scope.messages && $scope.messages.scroll) {
-        $scope.messages.scroll.destroy();
-        scrollRef = null;
-      }
-      if(u) {
-        scrollRef = new Firebase.util.Scroll(messagesRef, 'reverse_date');
-      } else {
-        scrollRef = new Firebase.util.Scroll(publicRef, 'reverse_date');
-      }
-      $scope.messages = $firebaseArray(scrollRef);
-      $scope.messages.scroll = scrollRef.scroll;
-    }, true);
+    var messagesRef = ref.child('messages').orderByChild('reverse_date');
+    var publicRef = ref.child('public_messages').orderByChild('reverse_date');
 
     $scope.loading = true;
 
-    $scope.$watch(function() {
-      if(scrollRef.scroll) {
-        return scrollRef.scroll.hasNext();
+    $scope.$watch('user', function(u) {
+      if(u) {
+        $scope.messages = $firebaseArray(messagesRef);
       } else {
-        return true;
+        $scope.messages = $firebaseArray(publicRef);
       }
-    }, _.debounce(function(has) {
-      $scope.loading = has;
-    }), 100);
+      $scope.messagesLimit = 5;
+      $scope.messages.$loaded().then(function() {
+        $scope.loading = false;
+      });
+    }, true);
+
+
+    $scope.scroll = _.throttle(function() {
+      $scope.messagesLimit = $scope.messagesLimit + 5;
+    }, 500);
+
+    $scope.disabledScroll = function(data) {
+      return $scope.messagesLimit >= data.length;
+    }
 
     $scope.filteredMessages = [];
     $scope.team = '';
     $scope.selectTeam = function(team) {
+      $scope.messagesLimit = 5;
       $scope.team = team;
     };
 
