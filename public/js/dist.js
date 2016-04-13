@@ -5,7 +5,6 @@
 //= require moment-timezone/builds/moment-timezone-with-data
 //= require lodash/dist/lodash
 //= require firebase/firebase
-//= require firebase-util/dist/firebase-util
 
 //= require angular/angular.min
 //= require ng-dialog/js/ngDialog.min
