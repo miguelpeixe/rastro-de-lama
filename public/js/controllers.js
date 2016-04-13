@@ -27,6 +27,11 @@ angular.module('rastrodelama')
       $scope.user = auth;
     });
 
+    $scope.unauth = function(reload) {
+      $scope.authObj.$unauth();
+      $state.go('home', {}, {reload: reload});
+    }
+
   }
 ])
 
@@ -49,11 +54,12 @@ angular.module('rastrodelama')
     var messagesRef = ref.child('messages');
     var publicRef = ref.child('public_messages');
 
-    var scrollRef = false;
+    var scrollRef;
 
     $scope.$watch('user', function(u) {
-      if(scrollRef) {
-        scrollRef.scroll.destroy();
+      if($scope.messages && $scope.messages.scroll) {
+        $scope.messages.scroll.destroy();
+        scrollRef = null;
       }
       if(u) {
         scrollRef = new Firebase.util.Scroll(messagesRef, 'reverse_date');
@@ -135,7 +141,7 @@ angular.module('rastrodelama')
       return $scope.authObj.$getAuth();
     }, function(auth) {
       if(auth && $state.current.name == 'login') {
-        $state.go('home');
+        $state.go('home', {}, {reload: true});
       }
     });
 

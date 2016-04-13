@@ -10,10 +10,13 @@ angular.module('rastrodelama')
         165708632, // aline lata
         201010328, // adriana barbosa
         197696199, // silvi medeiros
-        12820836 // fred frança
+        12820836, // fred frança
+        153664526, // erico toscano
+        184529742 // thiago zanato
       ],
       guests: [
-
+        212354604, // marlon
+        218353880 // ricardo
       ]
     };
 

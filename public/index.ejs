@@ -20,7 +20,7 @@
     <header id="masthead" ng-class="{collapsed: !isHome}">
       <nav id="auth_nav">
         <a ui-sref="login" ng-hide="user">Login</a>
-        <a href="javascript:void(0);" ng-click="authObj.$unauth()" ng-show="user">Sair</a>
+        <a href="javascript:void(0);" ng-click="unauth(true)" ng-show="user">Sair</a>
       </nav>
       <h1>
         <a ui-sref="home"><%= site_title %></a>
@@ -56,7 +56,10 @@
         <a href="javascript:void(0);" ng-click="selectTeam('core')" ng-class="{active:team=='core'}">equipe de produção</a>
         <a href="javascript:void(0);" ng-click="selectTeam('guests')" ng-class="{active:team=='guests'}">moradores</a>
       </nav>
-      <div infinite-scroll="messages.scroll.next(7)" infinite-scroll-distance="0" infinite-scroll-disabled="!messages.scroll.hasNext()">
+      <div
+      infinite-scroll="messages.scroll.next(7)"
+      infinite-scroll-distance="0" infinite-scroll-disabled="!messages.scroll.hasNext()"
+      >
         <timeline ng-show="filteredMessages.length" items="filteredMessages = (messages | byTeam:team)" date-param="'date'"></timeline>
       </div>
       <p ng-hide="filteredMessages.length || loading" class="no-message">Nenhuma atividade foi publicada, ainda!</p>

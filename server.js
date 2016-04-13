@@ -140,7 +140,12 @@ module.exports = function(config, messageRef, fileRef, bot) {
       file.store == 'cloudinary' &&
       file.mime.indexOf('video') != -1
     ) {
-      return cloudinary.url('dv7h71kmagjqagu8cre2.webm', {video_codec: 'vp8', resource_type: 'video'});
+      return cloudinary.url(file.store_id + '.webm', {video_codec: 'vp8', resource_type: 'video'});
+    } else if(
+      file.store == 'cloudinary' &&
+      file.mime.indexOf('image') != -1
+    ) {
+      return cloudinary.url(file.store_id + '.jpg', {quality: 80, width: 870, crop: 'scale', resource_type: 'image'});
     } else {
       return file.url;
     }

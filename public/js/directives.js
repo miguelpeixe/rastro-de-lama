@@ -10,7 +10,6 @@ angular.module('rastrodelama')
       },
       template: '<div class="timeline"></div>',
       replace: true,
-      link: function(scope, element, attrs) {},
       controller: [
         '$scope',
         '$element',
@@ -210,7 +209,7 @@ angular.module('rastrodelama')
         };
 
         scope.remove = function(item) {
-          if(confirm('Você tem certeza?')) {
+          if(confirm('Você tem certeza que deseja remover essa publicação?')) {
             $firebaseObject(publicRef.child(item.$id)).$remove();
             $firebaseObject(messagesRef.child(item.$id)).$remove();
           }
